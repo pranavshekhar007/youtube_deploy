@@ -22,7 +22,9 @@ const Home = ({ type }) => {
       try {
         // Fetch videos only if the user is logged in
         if (currentUser) {
-          const res = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/${type}`);
+          const res = await axios.get(
+            `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/${type}`
+          );
           // Update both videos and filteredVideos state with fetched data
           setVideos(res.data || []);
           setFilteredVideos(res.data || []);
@@ -56,7 +58,10 @@ const Home = ({ type }) => {
   return (
     <div className="min-h-screen">
       {/* Category Filter Buttons */}
-      <FilterButtons selectedCategory={selectedCategory} setCategory={setSelectedCategory} />
+      <FilterButtons
+        selectedCategory={selectedCategory}
+        setCategory={setSelectedCategory}
+      />
 
       <div className="mt-10">
         {/* If the user is not signed in, show the sign-in prompt */}

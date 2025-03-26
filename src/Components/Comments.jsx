@@ -28,7 +28,7 @@ const Comments = ({ videoId }) => {
       const token = currentUser.token; // Get authentication token
 
       const res = await axios.post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/comments/",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/comments/`,
         {
           videoId,
           desc: newComment,

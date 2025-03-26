@@ -24,7 +24,7 @@ const Channel = () => {
   const createChannel = async () => {
     try {
       await axios.post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/channels",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/channels`,
         { name: newChannelName, description: newChannelDescription },
         { headers: { Authorization: `Bearer ${token}` } } // Send token for authentication
       );

@@ -21,7 +21,9 @@ const Profile = () => {
   // ✅ Fetch user videos
   const fetchUserVideos = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/user/${currentUser._id}`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/user/${currentUser._id}`
+      );
       setVideos(res.data);
     } catch (error) {
       console.error("Error fetching user videos:", error);
@@ -31,7 +33,9 @@ const Profile = () => {
   // ✅ Fetch user channel
   const fetchChannel = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/channels/${currentUser._id}`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/channels/${currentUser._id}`
+      );
       setChannel(res.data);
     } catch (error) {
       console.error("Error fetching channel:", error);
@@ -49,7 +53,7 @@ const Profile = () => {
       console.error("Error deleting video:", error);
     }
   };
- 
+
   // Handle Edit Click
   const handleEditClick = (video) => {
     setEditingVideo(video._id);
@@ -59,8 +63,14 @@ const Profile = () => {
   // Handle Video Update
   const handleUpdate = async (videoId) => {
     try {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/${videoId}`, { title: newTitle });
-      setVideos(videos.map((video) => (video._id === videoId ? { ...video, title: newTitle } : video)));
+      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/${videoId}`, {
+        title: newTitle,
+      });
+      setVideos(
+        videos.map((video) =>
+          video._id === videoId ? { ...video, title: newTitle } : video
+        )
+      );
       setEditingVideo(null);
     } catch (error) {
       console.error("Error updating video:", error);
@@ -75,50 +85,61 @@ const Profile = () => {
     );
   }
 
-
   return (
     <div className="w-full">
       {/* Channel Banner */}
       {channel && (
         <div className="relative w-full h-60 bg-gray-300">
           <img
-            src={channel.bannerUrl || "/default-banner.jpg"} 
+            src={channel.bannerUrl || "/default-banner.jpg"}
             alt="Channel Banner"
             className="w-full h-full object-cover"
           />
           {/* Profile Image */}
           <div className="absolute left-10 bottom-[-40px]">
             <img
-              src={channel.profileUrl || "/default-profile.png"} 
+              src={channel.profileUrl || "/default-profile.png"}
               alt="Channel Profile"
               className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
             />
           </div>
         </div>
       )}
-  
+
       {/* Channel Info Section */}
       <div className="px-10 mt-14">
         <h2 className="text-2xl font-bold">{channel?.name}</h2>
-        <p className="text-gray-600">@{channel?.description} • {videos.length} videos</p>
-        <button className="mt-2 px-4 py-2 bg-black text-white rounded-md">Subscribe</button>
+        <p className="text-gray-600">
+          @{channel?.description} • {videos.length} videos
+        </p>
+        <button className="mt-2 px-4 py-2 bg-black text-white rounded-md">
+          Subscribe
+        </button>
       </div>
-  
+
       {/* Navigation Tabs */}
       <div className="border-b border-gray-300 mt-6 px-10 flex space-x-6 text-lg">
-        <button className="pb-2 border-b-4 border-black font-bold">Videos</button>
+        <button className="pb-2 border-b-4 border-black font-bold">
+          Videos
+        </button>
         <button className="pb-2 text-gray-500 hover:text-black">Shorts</button>
-        <button className="pb-2 text-gray-500 hover:text-black">Playlists</button>
-        <button className="pb-2 text-gray-500 hover:text-black">Community</button>
+        <button className="pb-2 text-gray-500 hover:text-black">
+          Playlists
+        </button>
+        <button className="pb-2 text-gray-500 hover:text-black">
+          Community
+        </button>
       </div>
-  
+
       {/* Sorting Buttons */}
       <div className="px-10 mt-4 flex space-x-4">
-        <button className="px-3 py-1 border rounded-md bg-gray-200">Latest</button>
+        <button className="px-3 py-1 border rounded-md bg-gray-200">
+          Latest
+        </button>
         <button className="px-3 py-1 border rounded-md">Popular</button>
         <button className="px-3 py-1 border rounded-md">Oldest</button>
       </div>
-  
+
       {/* Videos Section */}
       <div className="w-full px-10 mt-6">
         <h3 className="text-2xl font-semibold mb-4">Videos</h3>
@@ -177,7 +198,6 @@ const Profile = () => {
       </div>
     </div>
   );
-  
 };
 
 export default Profile;

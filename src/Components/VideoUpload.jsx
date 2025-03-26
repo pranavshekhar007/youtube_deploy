@@ -42,7 +42,7 @@ const VideoUpload = () => {
 
     try {
       // Send POST request to upload the video
-      await axios.post("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos", formData, {
+      await axios.post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos`, formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",

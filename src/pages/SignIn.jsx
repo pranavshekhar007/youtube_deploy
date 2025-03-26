@@ -22,7 +22,7 @@ const SignIn = () => {
     dispatch(loginStart());
     try {
       const res = await axios.post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/signin",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/signin`,
         { name, password },
         { withCredentials: true }
       );
@@ -40,7 +40,7 @@ const SignIn = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/signup",
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/signup`,
         { name, email, password },
         { withCredentials: true }
       );
@@ -58,7 +58,7 @@ const SignIn = () => {
       .then((result) => {
         axios
           .post(
-            "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/google",
+            `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/google`,
             {
               name: result.user.displayName,
               email: result.user.email,
