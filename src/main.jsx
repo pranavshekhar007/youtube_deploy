@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import Error from "./components/Error.jsx";
+import Error from "./Components/Error.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Profile = lazy(() => import("./pages/Profile.jsx"));
