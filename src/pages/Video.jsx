@@ -52,13 +52,35 @@ const Video = () => {
   };
 
   const handleSub = async () => {
-    if (currentUser?.subscribedUsers?.includes(channel?._id)) {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/unsub/${channel?._id}`);
-    } else {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/sub/${channel?._id}`);
+    if (!currentUser) return;
+  
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${currentUser?.token}`, // Include JWT token
+        },
+      };
+  
+      if (currentUser?.subscribedUsers?.includes(channel?._id)) {
+        await axios.put(
+          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/unsub/${channel?._id}`,
+          {},
+          config
+        );
+      } else {
+        await axios.put(
+          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/sub/${channel?._id}`,
+          {},
+          config
+        );
+      }
+  
+      dispatch(subscription(channel?._id));
+    } catch (error) {
+      console.error("Subscription error:", error.response?.data || error.message);
     }
-    dispatch(subscription(channel?._id));
   };
+  
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 p-4 md:p-6 mt-16">
