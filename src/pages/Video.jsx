@@ -95,8 +95,8 @@ const Video = () => {
           channel?._id
         }`,
         {},
+        { withCredentials: true },
         {
-          withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -108,8 +108,8 @@ const Video = () => {
           channel?._id
         }`,
         {},
+        { withCredentials: true },
         {
-          withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
           },
