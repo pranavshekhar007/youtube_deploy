@@ -22,19 +22,27 @@ const Video = () => {
     const fetchData = async () => {
       try {
         const videoRes = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/find/${path}`, {},
-          { withCredentials: true },  {
+          `${
+            import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+          }/api/videos/find/${path}`,
+          {},
+          {
+            withCredentials: true,
             headers: {
-              Authorization: `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         const channelRes = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/find/${videoRes.data.userId}`, {},
-          { withCredentials: true },  {
+          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/find/${
+            videoRes.data.userId
+          }`,
+          {},       
+          {
+            withCredentials: true,
             headers: {
-              Authorization: `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         setChannel(channelRes.data);
@@ -48,23 +56,33 @@ const Video = () => {
 
   const handleLike = async () => {
     if (!currentUser) return;
-    await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/like/${currentVideo?._id}`, {},
-      { withCredentials: true },  {
+    await axios.put(
+      `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/like/${
+        currentVideo?._id
+      }`,
+      {},
+      {
+        withCredentials: true,
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      } );
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     dispatch(like(currentUser._id));
   };
 
   const handleDislike = async () => {
     if (!currentUser) return;
     await axios.put(
-      `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/dislike/${currentVideo?._id}`, {},
-      { withCredentials: true },  {
+      `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/dislike/${
+        currentVideo?._id
+      }`,
+      {},
+      {
+        withCredentials: true,
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     dispatch(dislike(currentUser._id));
@@ -72,19 +90,31 @@ const Video = () => {
 
   const handleSub = async () => {
     if (currentUser?.subscribedUsers?.includes(channel?._id)) {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/unsub/${channel?._id}`, {},
-        { withCredentials: true },  {
+      await axios.put(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/unsub/${
+          channel?._id
+        }`,
+        {},
+        {
+          withCredentials: true,
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } else {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/sub/${channel?._id}`, {},
-        { withCredentials: true },  {
+      await axios.put(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/sub/${
+          channel?._id
+        }`,
+        {},
+        {
+          withCredentials: true,
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     }
     dispatch(subscription(channel?._id));
   };
@@ -108,7 +138,13 @@ const Video = () => {
             ) : (
               <video
                 className="w-full h-full object-cover rounded-lg shadow-lg"
-                src={currentVideo?.videoUrl ? `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}${currentVideo.videoUrl}` : ""}
+                src={
+                  currentVideo?.videoUrl
+                    ? `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}${
+                        currentVideo.videoUrl
+                      }`
+                    : ""
+                }
                 controls
               />
             )
@@ -123,7 +159,8 @@ const Video = () => {
 
         <div className="flex flex-wrap justify-between items-center text-gray-600 dark:text-gray-300 mt-2">
           <span>
-            {currentVideo?.views || 0} views • {currentVideo?.createdAt ? format(currentVideo.createdAt) : ""}
+            {currentVideo?.views || 0} views •{" "}
+            {currentVideo?.createdAt ? format(currentVideo.createdAt) : ""}
           </span>
           <div className="flex flex-wrap gap-3">
             <button className="flex items-center gap-2" onClick={handleLike}>
@@ -162,7 +199,9 @@ const Video = () => {
               alt="Channel Avatar"
             />
             <div className="text-gray-800 dark:text-white">
-              <span className="font-semibold">{channel?.name || "Loading..."}</span>
+              <span className="font-semibold">
+                {channel?.name || "Loading..."}
+              </span>
               <p className="text-sm text-gray-600 dark:text-gray-300">
                 {channel?.subscribers || 0} subscribers
               </p>
