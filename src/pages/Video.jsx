@@ -23,11 +23,9 @@ const Video = () => {
         const videoRes = await axios.get(
           `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/find/${path}`
         );
-        console.log("Video Data:", videoRes.data);
         const channelRes = await axios.get(
           `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/find/${videoRes.data.userId}`
         );
-        console.log("Channel Data:", channelRes.data);
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
       } catch (err) {
@@ -52,35 +50,13 @@ const Video = () => {
   };
 
   const handleSub = async () => {
-    if (!currentUser) return;
-  
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${currentUser?.token}`, // Include JWT token
-        },
-      };
-  
-      if (currentUser?.subscribedUsers?.includes(channel?._id)) {
-        await axios.put(
-          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/unsub/${channel?._id}`,
-          {},
-          config
-        );
-      } else {
-        await axios.put(
-          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/sub/${channel?._id}`,
-          {},
-          config
-        );
-      }
-  
-      dispatch(subscription(channel?._id));
-    } catch (error) {
-      console.error("Subscription error:", error.response?.data || error.message);
+    if (currentUser?.subscribedUsers?.includes(channel?._id)) {
+      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/unsub/${channel?._id}`);
+    } else {
+      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/sub/${channel?._id}`);
     }
+    dispatch(subscription(channel?._id));
   };
-  
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 p-4 md:p-6 mt-16">

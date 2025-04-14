@@ -4,7 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import { IoMdMic } from "react-icons/io";
 import { RiVideoAddLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
 import logo from "../assets/logo.png";
 import { logout } from "../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [q, setQ] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -56,19 +57,19 @@ const Navbar = ({ toggleSidebar }) => {
   return (
     <>
       {/* Navbar Container */}
-      <nav className="flex justify-between fixed top-0 w-full bg-white px-6 py-2 z-50 shadow-md items-center">
+      <nav className="flex justify-between fixed top-0 w-full bg-white px-4 py-2 z-50 shadow-md items-center">
         {/* Left Section: Sidebar Toggle and Logo */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center">
           <button onClick={toggleSidebar}>
             <AiOutlineMenu className="text-2xl cursor-pointer" />
           </button>
           <Link to="/">
-            <img src={logo} alt="Logo" className="w-28 cursor-pointer" />
+            <img src={logo} alt="Logo" className="w-24 cursor-pointer" />
           </Link>
         </div>
 
         {/* Middle Section: Search Bar */}
-        <div className="flex items-center w-[35%]">
+        <div className="hidden md:flex items-center w-[35%]">
           <div className="w-full flex border rounded-full overflow-hidden">
             <input
               type="text"
@@ -87,14 +88,26 @@ const Navbar = ({ toggleSidebar }) => {
         </div>
 
         {/* Right Section: Video Upload, Notifications, Profile Dropdown */}
-        <div className="flex space-x-5 items-center">
+        <div className="flex space-x-4 items-center">
+          {/* Search Icon - Only on Small Screens */}
+          <CiSearch
+            size={24}
+            className="block md:hidden cursor-pointer"
+            onClick={() => setShowMobileSearch(!showMobileSearch)}
+          />
+
           {/* Video Upload Button */}
           <Link to="upload">
             <RiVideoAddLine className="text-xl cursor-pointer" />
           </Link>
-
-          {/* Notification Icon */}
-          <AiOutlineBell className="text-2xl cursor-pointer" />
+          <div className="relative">
+            {/* Notification Icon */}
+            <AiOutlineBell className="text-2xl cursor-pointer" />
+            {/* Red Notification Badge */}
+            <span className="absolute top-[-6px] right-[-6px] bg-red-600 text-white text-xs px-1 rounded-full">
+              9+
+            </span>
+          </div>
 
           {/* User Profile and Dropdown */}
           {currentUser ? (
@@ -138,6 +151,27 @@ const Navbar = ({ toggleSidebar }) => {
           )}
         </div>
       </nav>
+      {showMobileSearch && (
+        <div className="flex md:hidden px-4 py-2 bg-white shadow-md w-full fixed top-14 z-40">
+          <input
+            type="text"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Search"
+            className="flex-grow border px-3 py-2 rounded-l-md outline-none"
+          />
+          <button
+            onClick={() => {
+              navigate(`/search?q=${q}`);
+              setShowMobileSearch(false);
+            }}
+            className="bg-gray-200 px-4 py-2 rounded-r-md"
+          >
+            <CiSearch size={20} />
+          </button>
+        </div>
+      )}
+
       {/* Video Upload Modal (if open) */}
       {open && <VideoUpload setOpen={setOpen} />}
     </>

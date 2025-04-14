@@ -58,10 +58,10 @@ const Home = ({ type }) => {
   return (
     <div className="min-h-screen">
       {/* Category Filter Buttons */}
-      <FilterButtons
+       {/* <FilterButtons
         selectedCategory={selectedCategory}
         setCategory={setSelectedCategory}
-      />
+      />  */}
 
       <div className="mt-10">
         {/* If the user is not signed in, show the sign-in prompt */}

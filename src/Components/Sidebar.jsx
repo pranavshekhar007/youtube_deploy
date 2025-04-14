@@ -36,19 +36,19 @@ const Sidebar = ({ isOpen, isLargeScreen }) => {
       id: 1,
       name: "Home",
       icon: <GoHome />,
-      path: "/"
+      path: "/",
     },
     {
       id: 2,
       name: "Your Channel",
       icon: <MdPerson />,
-      path: "/channel"
+      path: "/channel",
     },
     {
       id: 3,
       name: "Subscription",
       icon: <MdOutlineSubscriptions />,
-      path: "/subscriptions"
+      path: "/subscriptions",
     },
   ];
 
@@ -186,25 +186,22 @@ const Sidebar = ({ isOpen, isLargeScreen }) => {
 
   return (
     <div
-    className={`h-full bg-white overflow-y-auto 
+      className={`h-full bg-white overflow-y-auto 
       fixed top-10 transition-transform duration-300
-      ${isOpen ? "translate-x-0 w-1/4 sm:w-64" : "-translate-x-64"}
+      ${isOpen ? "translate-x-0 w-1/2 sm:w-64" : "-translate-x-64"}
       ${isLargeScreen ? "lg:translate-x-0 lg:block w-64" : "fixed z-50"}`}
-  >
+    >
       <div className="mt-10">
         {/* Home  */}
         <div className=" space-y-3 items-center">
           {sidebarItems.map((item) => {
             return (
               <Link key={item.id} to={item.path}>
-              <div
-                
-                className="flex items-center space-x-6 hover:bg-gray-200 duration-300 rounded-xl p-1"
-                >
-                <div className="text-xl cursor-pointer">{item.icon}</div>
-                <span className="cursor-pointer">{item.name}</span>
-              </div>
-                </Link>
+                <div className="flex items-center space-x-6 hover:bg-gray-200 duration-300 rounded-xl p-1">
+                  <div className="text-xl cursor-pointer">{item.icon}</div>
+                  <span className="cursor-pointer">{item.name}</span>
+                </div>
+              </Link>
             );
           })}
         </div>
