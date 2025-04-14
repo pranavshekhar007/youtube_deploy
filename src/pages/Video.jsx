@@ -21,10 +21,10 @@ const Video = () => {
     const fetchData = async () => {
       try {
         const videoRes = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/find/${path}`
+          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/find/${path}`, { withCredentials: true }
         );
         const channelRes = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/find/${videoRes.data.userId}`
+          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/find/${videoRes.data.userId}`, { withCredentials: true }
         );
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
@@ -37,23 +37,23 @@ const Video = () => {
 
   const handleLike = async () => {
     if (!currentUser) return;
-    await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/like/${currentVideo?._id}`);
+    await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/like/${currentVideo?._id}`,{ withCredentials: true });
     dispatch(like(currentUser._id));
   };
 
   const handleDislike = async () => {
     if (!currentUser) return;
     await axios.put(
-      `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/dislike/${currentVideo?._id}`
+      `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/dislike/${currentVideo?._id}`, { withCredentials: true }
     );
     dispatch(dislike(currentUser._id));
   };
 
   const handleSub = async () => {
     if (currentUser?.subscribedUsers?.includes(channel?._id)) {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/unsub/${channel?._id}`);
+      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/unsub/${channel?._id}`, { withCredentials: true });
     } else {
-      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/sub/${channel?._id}`);
+      await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/sub/${channel?._id}`, { withCredentials: true });
     }
     dispatch(subscription(channel?._id));
   };
