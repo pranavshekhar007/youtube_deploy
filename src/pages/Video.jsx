@@ -9,6 +9,7 @@ import { format } from "timeago.js";
 import { subscription } from "../redux/userSlice";
 import Comments from "../Components/Comments";
 import Recommendation from "../Components/Recommendation";
+const token = localStorage.getItem("token");
 
 const Video = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -22,11 +23,19 @@ const Video = () => {
       try {
         const videoRes = await axios.get(
           `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/videos/find/${path}`, {},
-          { withCredentials: true }
+          { withCredentials: true },  {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
         const channelRes = await axios.get(
           `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/find/${videoRes.data.userId}`, {},
-          { withCredentials: true }
+          { withCredentials: true },  {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
@@ -40,7 +49,11 @@ const Video = () => {
   const handleLike = async () => {
     if (!currentUser) return;
     await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/like/${currentVideo?._id}`, {},
-      { withCredentials: true } );
+      { withCredentials: true },  {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      } );
     dispatch(like(currentUser._id));
   };
 
@@ -48,7 +61,11 @@ const Video = () => {
     if (!currentUser) return;
     await axios.put(
       `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/dislike/${currentVideo?._id}`, {},
-      { withCredentials: true }
+      { withCredentials: true },  {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
     dispatch(dislike(currentUser._id));
   };
@@ -56,10 +73,18 @@ const Video = () => {
   const handleSub = async () => {
     if (currentUser?.subscribedUsers?.includes(channel?._id)) {
       await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/unsub/${channel?._id}`, {},
-        { withCredentials: true });
+        { withCredentials: true },  {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
     } else {
       await axios.put(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users/sub/${channel?._id}`, {},
-        { withCredentials: true });
+        { withCredentials: true },  {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
     }
     dispatch(subscription(channel?._id));
   };
