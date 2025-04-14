@@ -95,12 +95,7 @@ const Video = () => {
           channel?._id
         }`,
         {},
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { withCredentials: true },
       );
     } else {
       await axios.put(
@@ -108,12 +103,7 @@ const Video = () => {
           channel?._id
         }`,
         {},
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { withCredentials: true },
       );
     }
     dispatch(subscription(channel?._id));
